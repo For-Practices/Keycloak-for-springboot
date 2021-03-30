@@ -5,29 +5,33 @@ import org.keycloak.test.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Optional;
+import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/users/")
+
 public class UserController {
     @Autowired
     private UserRepository userRepository;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signUp")
-    public User signUp(@RequestBody User user){
+    @RolesAllowed("user")
+    public User save(@RequestBody User user){
+        System.out.println("post");
         return userRepository.save(user);
     }
 
-   /* @GetMapping(value = "/signIn")
-    @ResponseBody
-    public User signIn(@RequestParam Map<String,String> allParams){
-
-    }*/
+    @GetMapping("/signIn")
+    @RolesAllowed("user")
+    public List<User> findAll(){
+        System.out.println("get");
+        return userRepository.findAll();
+    }
 }
