@@ -24,6 +24,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
         KeycloakAuthenticationProvider keycloakAuthenticationProvider =keycloakAuthenticationProvider();
         keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
         auth.authenticationProvider(keycloakAuthenticationProvider);
@@ -39,12 +40,13 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
+        System.out.println("11111");
         super.configure(http);
         http
                 .authorizeRequests()
-               // .antMatchers("/users*").hasRole("user")
-                //.antMatchers("/users*").hasRole("admin")
+               .antMatchers("/api/v1/signIn").hasRole("user")
+                //.antMatchers("/signIn*").hasRole("admin")
                 .anyRequest().permitAll();
-        http.csrf().disable();
+        //http.csrf().disable();
     }
 }

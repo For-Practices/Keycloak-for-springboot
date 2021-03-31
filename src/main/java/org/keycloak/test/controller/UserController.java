@@ -22,14 +22,14 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signUp")
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     public User save(@RequestBody User user){
         System.out.println("post");
         return userRepository.save(user);
     }
 
     @GetMapping("/signIn")
-    @RolesAllowed("user")
+    //@RolesAllowed("admin")
     public List<User> findAll(){
         System.out.println("get");
         return userRepository.findAll();
